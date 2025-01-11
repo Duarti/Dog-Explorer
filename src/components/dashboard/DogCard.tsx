@@ -13,7 +13,7 @@ interface DogCardProps {
 
 const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-    const { setDogs } = useContext(DogsContext);
+    const { setContextDogs } = useContext(DogsContext);
 
     const onDetailsClick = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -25,7 +25,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
     };
 
     const onDeleteConfirm = () => {
-        setDogs((prevDogs) =>
+        setContextDogs((prevDogs) =>
             prevDogs.filter((prevDog) => prevDog.id !== dog.id)
         );
         setDeleteModalVisible(false);

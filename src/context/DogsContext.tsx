@@ -1,28 +1,39 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { Dog } from '../types/types';
+import getLocalDogs from '../utils/getLocalDogs';
 
 interface DogsContextProps {
-    dogs: Dog[];
-    setDogs: React.Dispatch<React.SetStateAction<Dog[]>>;
+    contextDogs: Dog[];
+    setContextDogs: React.Dispatch<React.SetStateAction<Dog[]>>;
 }
 
 export const DogsContext = createContext<DogsContextProps>({
-    dogs: [],
-    setDogs: () => {},
+    contextDogs: [],
+    setContextDogs: () => {},
 });
 
 /**
  * This global state provider will also update the local storage.
  */
 export const DogsProvider = ({ children }: { children: ReactNode }) => {
-    const [dogs, setDogs] = useState<Dog[]>([]);
+    const [contextDogs, setContextDogs] = useState<Dog[]>([]);
+    
+    const localDogs = getLocalDogs();
+    const hasLocalDogs = Boolean(localDogs.length);
+
     useEffect(() => {
-        if (!dogs.length) return;
-        localStorage.setItem('dogs', JSON.stringify(dogs));
-    }, [dogs]);
+        if (hasLocalDogs) {
+            setContextDogs(localDogs);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!contextDogs.length) return;
+        localStorage.setItem('dogs', JSON.stringify(contextDogs));
+    }, [contextDogs]);
 
     return (
-        <DogsContext.Provider value={{ dogs, setDogs }}>
+        <DogsContext.Provider value={{ contextDogs, setContextDogs }}>
             {children}
         </DogsContext.Provider>
     );

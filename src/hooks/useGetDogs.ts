@@ -14,10 +14,12 @@ interface UseDogsProps {
  * This hook will return sorted / filtered data queried from local storage, or from The Dog API if local storage is empty.
  */
 const useGetDogs = ({ searchQuery, sortOption }: UseDogsProps) => {
-    const { dogs: contextDogs, setDogs } = useContext(DogsContext);
-
+    const { contextDogs, setContextDogs } = useContext(DogsContext);
+    
     const localDogs = getLocalDogs();
     const hasLocalDogs = Boolean(localDogs.length);
+
+    // Don't fetch if we have dogs in local storage
     const {
         data: fetchedDogs,
         error,
@@ -25,23 +27,12 @@ const useGetDogs = ({ searchQuery, sortOption }: UseDogsProps) => {
         isFetching,
     } = useFetchDogs(!hasLocalDogs);
 
+    // If we have dogs in local storage, set the context dogs to the local dogs (this will write into local storage as well)
+    useEffect(() => {
+        if (!hasLocalDogs && fetchedDogs) setContextDogs(fetchedDogs);
+    }, [fetchedDogs]);
+
     const combinedDogs = contextDogs.length > 0 ? contextDogs : fetchedDogs;
-
-    useEffect(() => {
-        if (hasLocalDogs) {
-            setDogs(localDogs);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (contextDogs.length > 0) return;
-
-        if (combinedDogs && combinedDogs.length > 0) {
-            setDogs(combinedDogs);
-            localStorage.setItem('dogs', JSON.stringify(combinedDogs));
-        }
-    }, [contextDogs, combinedDogs, setDogs]);
-
     const sortedDogs = sortAndFilterDogs(combinedDogs, searchQuery, sortOption);
 
     return { dogs: sortedDogs, error, isLoading, isFetching };
