@@ -10,6 +10,7 @@ import { SortOption } from '../types/types';
 import useQueryDogs from '../hooks/useQueryDogs';
 import StyledCheckbox from '../components/StyledCheckbox';
 import useHandleVote from '../hooks/useHandleVote';
+import StyledButton from '../components/StyledButton';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -90,7 +91,7 @@ const Dashboard: React.FC = () => {
                     ) : (
                         <div />
                     )}
-                    <button
+                    <StyledButton
                         onClick={() =>
                             handleVote({
                                 imageIds: selectedDogs.map((dogId) => {
@@ -102,10 +103,9 @@ const Dashboard: React.FC = () => {
                             })
                         }
                         disabled={voteLoading}
-                        className="btn-primary"
                     >
                         {voteLoading ? 'Upvoting...' : 'Upvote Selected'}
-                    </button>
+                    </StyledButton>
                 </div>
 
                 <div className="h-[calc(100vh-200px)] overflow-y-auto no-scrollbar">

@@ -1,5 +1,7 @@
+import React from 'react';
+import TrashIcon from '../../assets/trash_icon.svg';
 import { Dog } from '../../types/types';
-import StyledCheckbox from '../StyledCheckbox';
+import StyledButton from '../StyledButton';
 
 interface DogCardProps {
     dog: Dog;
@@ -7,28 +9,49 @@ interface DogCardProps {
     onSelect: (dogId: number) => void;
 }
 
-const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => (
-    <div
-        className={`bg-white shadow-lg rounded-lg p-6 border ${
-            isSelected ? 'border-blue-500' : 'border-gray-200'
-        } relative`}
-    >
-        <div className="absolute top-2 right-2">
-            <StyledCheckbox
-                checked={isSelected}
-                onChange={() => onSelect(dog.id)}
+const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
+    const onDetailsClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+    };
+
+    const onDeleteClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+    };
+
+    return (
+        <div
+            className={`max-w-xs rounded-lg shadow-lg border cursor-pointer ${
+                isSelected
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 bg-white'
+            } overflow-hidden transition transform ${
+                isSelected ? 'scale-105 shadow-xl' : 'scale-100'
+            }`}
+            onClick={() => onSelect(dog.id)}
+        >
+            <img
+                src={dog.image.url}
+                alt={dog.name}
+                className="w-full h-40 object-cover"
             />
+            <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-800">
+                    {dog.name}
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                    Life span: {dog.lifeSpan}
+                </p>
+                <div className="flex justify-between items-center mt-4">
+                    <StyledButton onClick={onDetailsClick}>
+                        Details
+                    </StyledButton>
+                    <button onClick={onDeleteClick}>
+                        <img src={TrashIcon} alt="Delete" className="w-5 h-5" />
+                    </button>
+                </div>
+            </div>
         </div>
-        <img
-            src={dog.image?.url}
-            alt={dog.name}
-            className="rounded-lg object-cover w-full h-48"
-            loading="lazy"
-        />
-        <h2 className="text-lg font-semibold mt-4">{dog.name}</h2>
-        <p className="text-gray-700">Bred for: {dog.bredFor}</p>
-        <p className="text-gray-700">Life span: {dog.lifeSpan}</p>
-    </div>
-);
+    );
+};
 
 export default DogCard;
