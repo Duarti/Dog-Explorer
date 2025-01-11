@@ -77,7 +77,7 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="flex flex-col justify-center items-center">
-            <div className="p-4 max-w-[1400px]">
+            <div className="p-4 max-w-[1400px] min-w-[100%]">
                 <div className="border rounded-lg">
                     <div className={`p-${theme.spacing.sm} pb-0`}>
                         <div className="mb-4">
@@ -112,7 +112,7 @@ const Dashboard: React.FC = () => {
                                         }),
                                     })
                                 }
-                                disabled={voteLoading}
+                                disabled={voteLoading || !selectedSome}
                             >
                                 {voteLoading
                                     ? 'Upvoting...'
@@ -140,6 +140,7 @@ const Dashboard: React.FC = () => {
                     currentPage={currentPage}
                     pageCount={Math.ceil(dogs.length / ITEMS_PER_PAGE)}
                     onPageChange={onPageChange}
+                    disabled={isLoading || Boolean(error)}
                 />
             </div>
         </div>
