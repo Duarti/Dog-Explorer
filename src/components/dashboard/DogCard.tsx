@@ -20,6 +20,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
 
     return (
         <div
+            key={dog.id}
             className={`max-w-xs rounded-lg shadow-lg border cursor-pointer ${
                 isSelected
                     ? 'border-blue-500 bg-blue-50'

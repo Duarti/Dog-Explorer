@@ -11,6 +11,7 @@ import useQueryDogs from '../hooks/useQueryDogs';
 import StyledCheckbox from '../components/StyledCheckbox';
 import useHandleVote from '../hooks/useHandleVote';
 import StyledButton from '../components/StyledButton';
+import { theme } from '../styles/theme';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -75,59 +76,72 @@ const Dashboard: React.FC = () => {
     const selectedSome = selectedDogs.length > 0;
 
     return (
-        <div className="p-4">
-            <div className="mb-4">
-                <SortSelect value={sortOption} onChange={setSortOption} />
-            </div>
-            <div className="border rounded-lg p-4">
-                <SearchBar value={searchQuery} onChange={setSearchQuery} />
-                <div className="flex justify-between w-full mb-4">
-                    {selectedSome ? (
-                        <StyledCheckbox
-                            checked={selectedAll}
-                            onChange={onSelectAll}
-                            label="Select All"
+        <div className="flex flex-col justify-center items-center">
+            <div className="p-4 max-w-[1400px]">
+                <div className="border rounded-lg">
+                    <div className={`p-${theme.spacing.sm} pb-0`}>
+                        <div className="mb-4">
+                            <SortSelect
+                                value={sortOption}
+                                onChange={setSortOption}
+                            />
+                        </div>
+                        <SearchBar
+                            value={searchQuery}
+                            onChange={setSearchQuery}
                         />
-                    ) : (
-                        <div />
-                    )}
-                    <StyledButton
-                        onClick={() =>
-                            handleVote({
-                                imageIds: selectedDogs.map((dogId) => {
-                                    return (
-                                        dogs.find((dog) => dog.id === dogId)
-                                            ?.referenceImageId || ''
-                                    );
-                                }),
-                            })
-                        }
-                        disabled={voteLoading}
-                    >
-                        {voteLoading ? 'Upvoting...' : 'Upvote Selected'}
-                    </StyledButton>
-                </div>
+                        <div className="flex justify-between w-full mb-4">
+                            {selectedSome ? (
+                                <StyledCheckbox
+                                    checked={selectedAll}
+                                    onChange={onSelectAll}
+                                    label="Select All"
+                                />
+                            ) : (
+                                <div />
+                            )}
+                            <StyledButton
+                                onClick={() =>
+                                    handleVote({
+                                        imageIds: selectedDogs.map((dogId) => {
+                                            return (
+                                                dogs.find(
+                                                    (dog) => dog.id === dogId
+                                                )?.referenceImageId || ''
+                                            );
+                                        }),
+                                    })
+                                }
+                                disabled={voteLoading}
+                            >
+                                {voteLoading
+                                    ? 'Upvoting...'
+                                    : 'Upvote Selected'}
+                            </StyledButton>
+                        </div>
+                    </div>
 
-                <div className="h-[calc(100vh-200px)] overflow-y-auto no-scrollbar">
-                    {isLoading || isFetching ? (
-                        <LoadingSpinner />
-                    ) : error ? (
-                        <ErrorMessage />
-                    ) : (
-                        <DogGrid
-                            dogs={dogs}
-                            currentPage={currentPage}
-                            selectedDogs={selectedDogs}
-                            onSelectDog={handleSelectDog}
-                        />
-                    )}
+                    <div className="h-[calc(100vh-200px)] overflow-y-auto no-scrollbar">
+                        {isLoading || isFetching ? (
+                            <LoadingSpinner />
+                        ) : error ? (
+                            <ErrorMessage />
+                        ) : (
+                            <DogGrid
+                                dogs={dogs}
+                                currentPage={currentPage}
+                                selectedDogs={selectedDogs}
+                                onSelectDog={handleSelectDog}
+                            />
+                        )}
+                    </div>
                 </div>
+                <Pagination
+                    currentPage={currentPage}
+                    pageCount={Math.ceil(dogs.length / ITEMS_PER_PAGE)}
+                    onPageChange={onPageChange}
+                />
             </div>
-            <Pagination
-                currentPage={currentPage}
-                pageCount={Math.ceil(dogs.length / ITEMS_PER_PAGE)}
-                onPageChange={onPageChange}
-            />
         </div>
     );
 };

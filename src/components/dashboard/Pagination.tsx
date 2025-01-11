@@ -12,28 +12,30 @@ const Pagination: React.FC<PaginationProps> = ({
     pageCount,
     onPageChange,
 }) => (
-    <div
-        className={`mt-${theme.spacing.sm} flex justify-center items-center gap-${theme.spacing.xs}`}
-    >
-        <StyledButton
-            onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
-            disabled={currentPage === 1}
-            className="min-w-48"
-        >
-            Previous
-        </StyledButton>
-        <span className="px-4">
+    <div className={`flex flex-col gap-${theme.spacing.xs} items-center justify-center mt-${theme.spacing.sm}`}>
+        <div className="px-4">
             Page {currentPage} of {pageCount}
-        </span>
-        <StyledButton
-            onClick={() =>
-                onPageChange(Math.min(currentPage + 1, pageCount || 1))
-            }
-            disabled={currentPage === pageCount}
-            className="min-w-48"
+        </div>
+        <div
+            className={`flex justify-center items-center gap-${theme.spacing.sm}`}
         >
-            Next
-        </StyledButton>
+            <StyledButton
+                onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
+                disabled={currentPage === 1}
+                className="min-w-24"
+            >
+                Previous
+            </StyledButton>
+            <StyledButton
+                onClick={() =>
+                    onPageChange(Math.min(currentPage + 1, pageCount || 1))
+                }
+                disabled={currentPage === pageCount}
+                className="min-w-24"
+            >
+                Next
+            </StyledButton>
+        </div>
     </div>
 );
 
