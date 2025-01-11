@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import TrashIcon from '/assets/trash_icon.svg';
 import { Dog } from '../../types/types';
 import StyledButton from '../StyledButton';
+import StyledModal from '../StyledModal';
+import { DogsContext } from '../../context/DogsContext';
 
 interface DogCardProps {
     dog: Dog;
@@ -10,17 +12,27 @@ interface DogCardProps {
 }
 
 const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const { setDogs } = useContext(DogsContext);
+
     const onDetailsClick = (e: React.MouseEvent) => {
         e.stopPropagation();
     };
 
     const onDeleteClick = (e: React.MouseEvent) => {
         e.stopPropagation();
+        setDeleteModalVisible(true);
+    };
+
+    const onDeleteConfirm = () => {
+        setDogs((prevDogs) =>
+            prevDogs.filter((prevDog) => prevDog.id !== dog.id)
+        );
+        setDeleteModalVisible(false);
     };
 
     return (
         <div
-            key={dog.id}
             className={`rounded-lg shadow-lg border cursor-pointer ${
                 isSelected
                     ? 'border-blue-500 bg-blue-50'
@@ -42,15 +54,28 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
                 <p className="text-sm text-gray-600 mt-1">
                     Life span: {dog.lifeSpan}
                 </p>
-                <div className="flex justify-between items-center mt-4">
+                <div className="flex justify-between items-center mt-4 group">
                     <StyledButton onClick={onDetailsClick}>
                         Details
                     </StyledButton>
                     <button onClick={onDeleteClick}>
-                        <img src={TrashIcon} alt="Delete" className="w-5 h-5" />
+                        <img
+                            src={TrashIcon}
+                            alt="Delete"
+                            className={`w-5 h-5 transition-transform duration-200 hover:scale-125 ${deleteModalVisible ? 'scale-125' : ''}`}
+                        />
                     </button>
                 </div>
             </div>
+            <StyledModal
+                isOpen={deleteModalVisible}
+                onClose={() => setDeleteModalVisible(false)}
+                title="Confirm"
+                onConfirm={onDeleteConfirm}
+                confirmButtonText="Delete"
+            >
+                <p>Are you sure you want to delete this dog?</p>
+            </StyledModal>
         </div>
     );
 };

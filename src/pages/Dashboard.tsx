@@ -6,8 +6,8 @@ import DogGrid from '../components/dashboard/DogGrid';
 import Pagination from '../components/dashboard/Pagination';
 import SearchBar from '../components/dashboard/SearchBar';
 import SortSelect from '../components/dashboard/SortSelect';
-import { SortOption } from '../types/types';
-import useQueryDogs from '../hooks/useQueryDogs';
+import { SORT_OPTION_ENUM } from '../types/types';
+import useGetDogs from '../hooks/useGetDogs';
 import StyledCheckbox from '../components/StyledCheckbox';
 import useHandleVote from '../hooks/useHandleVote';
 import StyledButton from '../components/StyledButton';
@@ -23,12 +23,13 @@ const Dashboard: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState<string>(
         searchParams.get('query') || ''
     );
-    const [sortOption, setSortOption] = useState<SortOption>(
-        (searchParams.get('sort') as SortOption) || 'name-asc'
+    const [sortOption, setSortOption] = useState<SORT_OPTION_ENUM>(
+        (searchParams.get('sort') ||
+            SORT_OPTION_ENUM.NAME_ASC) as SORT_OPTION_ENUM
     );
     const [selectedDogs, setSelectedDogs] = useState<number[]>([]);
 
-    const { dogs, error, isLoading, isFetching } = useQueryDogs({
+    const { dogs, error, isLoading, isFetching } = useGetDogs({
         searchQuery,
         sortOption,
     });
@@ -43,7 +44,7 @@ const Dashboard: React.FC = () => {
         setSearchParams({
             page: String(currentPage),
             query: searchQuery,
-            sort: sortOption,
+            sort: String(sortOption),
         });
     }, [currentPage, searchQuery, sortOption, setSearchParams]);
 
