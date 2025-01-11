@@ -1,5 +1,5 @@
 import React from 'react';
-import TrashIcon from '../../assets/trash_icon.svg';
+import TrashIcon from '/assets/trash_icon.svg';
 import { Dog } from '../../types/types';
 import StyledButton from '../StyledButton';
 
