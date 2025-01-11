@@ -1,3 +1,5 @@
+import { theme } from '../../styles/theme';
+
 interface PaginationProps {
     currentPage: number;
     pageCount?: number;
@@ -9,15 +11,15 @@ const Pagination: React.FC<PaginationProps> = ({
     pageCount,
     onPageChange,
 }) => (
-    <div className="mt-4 flex justify-center gap-2">
+    <div className={`mt-${theme.spacing.sm} flex justify-center gap-${theme.spacing.xs}`}>
         <button
             onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+            className="btn-primary"
         >
             Previous
         </button>
-        <span className="px-4 py-2">
+        <span className="px-4">
             Page {currentPage} of {pageCount}
         </span>
         <button
@@ -25,7 +27,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 onPageChange(Math.min(currentPage + 1, pageCount || 1))
             }
             disabled={currentPage === pageCount}
-            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+            className="btn-primary"
         >
             Next
         </button>

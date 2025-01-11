@@ -1,6 +1,8 @@
+import { theme } from '../styles/theme';
+
 const Header: React.FC = () => (
-    <header className="bg-blue-600 text-white py-4 text-center">
-        <h1 className="text-3xl font-bold">React Dashboard</h1>
+    <header className={`bg-${theme.colors.primary} text-${theme.colors.white} py-${theme.spacing.sm} text-center`}>
+        <h1 className="text-3xl font-bold test">React Dashboard</h1>
     </header>
 );
 
