@@ -30,24 +30,17 @@ export const fetchDogs = async () => {
 };
 
 export const voteForDog = async (imageId: string, value: VOTE_ENUM) => {
-    try {
-        const response = await axios.post(
-            `${API_BASE_URL}/votes`,
-            {
-                image_id: imageId,
-                value: value,
+    await axios.post(
+        `${API_BASE_URL}/votes`,
+        {
+            image_id: imageId,
+            value: value,
+        },
+        {
+            headers: {
+                'x-api-key': API_KEY,
+                'Content-Type': 'application/json',
             },
-            {
-                headers: {
-                    'x-api-key': API_KEY,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        console.log('Vote Response:', response.data);
-        alert('Vote submitted successfully!');
-    } catch (error) {
-        console.error('Error voting:', error);
-        alert('Failed to submit the vote.');
-    }
+        }
+    );
 };

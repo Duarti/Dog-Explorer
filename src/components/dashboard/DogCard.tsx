@@ -1,4 +1,5 @@
 import { Dog } from '../../types/types';
+import StyledCheckbox from '../StyledCheckbox';
 
 interface DogCardProps {
     dog: Dog;
@@ -12,12 +13,12 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => (
             isSelected ? 'border-blue-500' : 'border-gray-200'
         } relative`}
     >
-        <input
-            type="checkbox"
-            checked={isSelected}
-            onChange={() => onSelect(dog.id)}
-            className="absolute top-2 right-2"
-        />
+        <div className="absolute top-2 right-2">
+            <StyledCheckbox
+                checked={isSelected}
+                onChange={() => onSelect(dog.id)}
+            />
+        </div>
         <img
             src={dog.image?.url}
             alt={dog.name}

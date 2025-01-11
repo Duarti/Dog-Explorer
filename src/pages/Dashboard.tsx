@@ -8,7 +8,8 @@ import SearchBar from '../components/dashboard/SearchBar';
 import SortSelect from '../components/dashboard/SortSelect';
 import { SortOption } from '../types/types';
 import useQueryDogs from '../hooks/useQueryDogs';
-import handleVote from '../utils/handleVote';
+import StyledCheckbox from '../components/StyledCheckbox';
+import useHandleVote from '../hooks/useHandleVote';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -29,6 +30,12 @@ const Dashboard: React.FC = () => {
         searchQuery,
         sortOption,
     });
+
+    const {
+        handleVote,
+        isLoading: voteLoading,
+        isError: voteError,
+    } = useHandleVote({ onFinish: () => setSelectedDogs([]) });
 
     useEffect(() => {
         setSearchParams({
@@ -53,6 +60,19 @@ const Dashboard: React.FC = () => {
         });
     };
 
+    const onSelectAll = () => {
+        setSelectedDogs((prevSelectedDogs) => {
+            if (prevSelectedDogs.length === dogs.length) {
+                return [];
+            } else {
+                return dogs.map((dog) => dog.id);
+            }
+        });
+    };
+
+    const selectedAll = selectedDogs.length === dogs.length;
+    const selectedSome = selectedDogs.length > 0;
+
     return (
         <div className="p-4">
             <div className="mb-4">
@@ -60,24 +80,35 @@ const Dashboard: React.FC = () => {
             </div>
             <div className="border rounded-lg p-4">
                 <SearchBar value={searchQuery} onChange={setSearchQuery} />
-                <button
-                    onClick={() =>
-                        handleVote({
-                            imageIds: selectedDogs.map((dogId) => {
-                                return (
-                                    dogs.find((dog) => dog.id === dogId)
-                                        ?.referenceImageId || ''
-                                );
-                            }),
-                            onSuccess: () => setSelectedDogs([]),
-                        })
-                    }
-                    className="btn-primary"
-                >
-                    Upvote Selected
-                </button>
+                <div className="flex justify-between w-full mb-4">
+                    {selectedSome ? (
+                        <StyledCheckbox
+                            checked={selectedAll}
+                            onChange={onSelectAll}
+                            label="Select All"
+                        />
+                    ) : (
+                        <div />
+                    )}
+                    <button
+                        onClick={() =>
+                            handleVote({
+                                imageIds: selectedDogs.map((dogId) => {
+                                    return (
+                                        dogs.find((dog) => dog.id === dogId)
+                                            ?.referenceImageId || ''
+                                    );
+                                }),
+                            })
+                        }
+                        disabled={voteLoading}
+                        className="btn-primary"
+                    >
+                        {voteLoading ? 'Upvoting...' : 'Upvote Selected'}
+                    </button>
+                </div>
 
-                <div className="h-[calc(100vh-200px)] overflow-y-auto scrollbar-hide">
+                <div className="h-[calc(100vh-200px)] overflow-y-auto no-scrollbar">
                     {isLoading || isFetching ? (
                         <LoadingSpinner />
                     ) : error ? (
