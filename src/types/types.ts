@@ -3,6 +3,13 @@ export enum VOTE_ENUM {
     UPVOTE,
 }
 
+export enum SORT_OPTION_ENUM {
+    NAME_ASC,
+    NAME_DESC,
+    LIFESPAN_ASC,
+    LIFESPAN_DESC,
+}
+
 export interface DogData {
     weight: {
         imperial: string;
@@ -39,8 +46,4 @@ export interface Dog {
     };
 }
 
-export type SortOption =
-    | 'name-asc'
-    | 'name-desc'
-    | 'lifespan-asc'
-    | 'lifespan-desc';
+export type ButtonType = 'primary' | 'secondary';

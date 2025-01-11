@@ -1,17 +1,23 @@
 import React from 'react';
-import { SortOption } from '../../types/types';
+import { SORT_OPTION_ENUM } from '../../types/types';
 import StyledSelect from '../StyledSelect';
 
 interface SortSelectProps {
-    value: SortOption;
-    onChange: (option: SortOption) => void;
+    value: SORT_OPTION_ENUM;
+    onChange: (option: SORT_OPTION_ENUM) => void;
 }
 
-const sortOptions: { value: SortOption; label: string }[] = [
-    { value: 'name-asc', label: 'Name (A-Z)' },
-    { value: 'name-desc', label: 'Name (Z-A)' },
-    { value: 'lifespan-asc', label: 'Life Span (Shortest to Longest)' },
-    { value: 'lifespan-desc', label: 'Life Span (Longest to Shortest)' },
+const sortOptions: { value: SORT_OPTION_ENUM; label: string }[] = [
+    { value: SORT_OPTION_ENUM.NAME_ASC, label: 'Name (A-Z)' },
+    { value: SORT_OPTION_ENUM.NAME_DESC, label: 'Name (Z-A)' },
+    {
+        value: SORT_OPTION_ENUM.LIFESPAN_ASC,
+        label: 'Life Span (Shortest to Longest)',
+    },
+    {
+        value: SORT_OPTION_ENUM.LIFESPAN_DESC,
+        label: 'Life Span (Longest to Shortest)',
+    },
 ];
 
 const SortSelect: React.FC<SortSelectProps> = ({ value, onChange }) => (

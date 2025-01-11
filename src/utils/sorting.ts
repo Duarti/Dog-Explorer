@@ -1,4 +1,4 @@
-import { Dog, SortOption } from '../types/types';
+import { Dog, SORT_OPTION_ENUM } from '../types/types';
 
 const getAverageLifespan = (lifespan: string): number => {
     const matches = lifespan.split(' ');
@@ -7,21 +7,21 @@ const getAverageLifespan = (lifespan: string): number => {
     return parseInt(matches[0]);
 };
 
-export const sortDogs = (dogs: Dog[], sortOption: SortOption): Dog[] => {
+export const sortDogs = (dogs: Dog[], sortOption: SORT_OPTION_ENUM): Dog[] => {
     const sortedDogs = [...dogs];
 
-    switch (sortOption) {
-        case 'name-asc':
+    switch (Number(sortOption)) {
+        case SORT_OPTION_ENUM.NAME_ASC:
             return sortedDogs.sort((a, b) => a.name.localeCompare(b.name));
-        case 'name-desc':
+        case SORT_OPTION_ENUM.NAME_DESC:
             return sortedDogs.sort((a, b) => b.name.localeCompare(a.name));
-        case 'lifespan-asc':
+        case SORT_OPTION_ENUM.LIFESPAN_ASC:
             return sortedDogs.sort(
                 (a, b) =>
                     getAverageLifespan(a.lifeSpan) -
                     getAverageLifespan(b.lifeSpan)
             );
-        case 'lifespan-desc':
+        case SORT_OPTION_ENUM.LIFESPAN_DESC:
             return sortedDogs.sort(
                 (a, b) =>
                     getAverageLifespan(b.lifeSpan) -
