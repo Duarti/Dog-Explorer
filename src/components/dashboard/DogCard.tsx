@@ -21,7 +21,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
     return (
         <div
             key={dog.id}
-            className={`max-w-xs rounded-lg shadow-lg border cursor-pointer ${
+            className={`rounded-lg shadow-lg border cursor-pointer ${
                 isSelected
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 bg-white'
@@ -33,7 +33,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
             <img
                 src={dog.image.url}
                 alt={dog.name}
-                className="w-full h-40 object-cover"
+                className="w-full h-72 object-cover"
             />
             <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-800">
