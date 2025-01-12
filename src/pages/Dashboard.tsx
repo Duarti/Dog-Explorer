@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
                         </div>
                         <SearchBar
                             value={searchQuery}
-                            onChange={setSearchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                         />
                         <div className="flex justify-between w-full mb-4">
                             {selectedSome ? (

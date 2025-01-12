@@ -44,7 +44,7 @@ const StyledModal: React.FC<StyledModalProps> = ({
                 )}
                 <div className="mb-4">{children}</div>
                 <div className="flex justify-end gap-3 mt-4">
-                    <StyledButton onClick={onClose} type="secondary">
+                    <StyledButton onClick={onClose} buttonType="secondary">
                         Cancel
                     </StyledButton>
                     <StyledButton onClick={onConfirm}>

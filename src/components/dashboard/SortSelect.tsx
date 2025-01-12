@@ -21,7 +21,7 @@ const sortOptions: { value: SORT_OPTION_ENUM; label: string }[] = [
 ];
 
 const SortSelect: React.FC<SortSelectProps> = ({ value, onChange }) => (
-    <StyledSelect value={value} onChange={onChange} options={sortOptions} />
+    <StyledSelect value={value} onChange={(e) => onChange(Number(e.target.value) as SORT_OPTION_ENUM)} options={sortOptions} />
 );
 
 export default SortSelect;

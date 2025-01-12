@@ -1,17 +1,15 @@
-interface StyledInputProps {
-    value: string;
-    onChange: (value: string) => void;
-    placeholder?: string;
+import React from "react";
+
+interface StyledInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    className?: string
 }
 
-const StyledInput: React.FC<StyledInputProps> = ({ value, onChange, placeholder = "" }) => {
+const StyledInput: React.FC<StyledInputProps> = ({ className, ...props }: StyledInputProps) => {
     return (
         <input
             type="text"
-            placeholder={placeholder}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full py-1 px-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className={`w-full transition-all py-1 px-4 border border-primary-light rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-mid focus:border-primary-dark focus:ring-transparent outline-none ${className}`}
+            {...props}
         />
     );
 };
