@@ -1,5 +1,5 @@
 const ErrorMessage: React.FC = () => (
-    <div className="h-full flex items-center justify-center text-red-500">
+    <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-red-500">
         Something went wrong
     </div>
 );

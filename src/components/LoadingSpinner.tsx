@@ -1,8 +1,12 @@
 import { theme, containerStyles } from '../styles/theme';
 
-const LoadingSpinner: React.FC = () => (
+interface LoadingSpinnerProps {
+    size?: number;
+}
+
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 8 }) => (
     <div className={`h-full ${containerStyles.centerFlex}`}>
-        <div className={`${theme.animation.spin} rounded-full h-${theme.spacing.lg} w-${theme.spacing.lg} border-b-2 border-${theme.colors.primary}`} />
+        <div className={`${theme.animation.spin} rounded-full h-${size} w-${size} border-b-2 border-primary`} />
     </div>
 );
 

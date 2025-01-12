@@ -8,7 +8,7 @@ const StyledInput: React.FC<StyledInputProps> = ({ className, ...props }: Styled
     return (
         <input
             type="text"
-            className={`w-full transition-all py-1 px-4 border border-primary-light rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-mid focus:border-primary-dark focus:ring-transparent outline-none ${className}`}
+            className={`w-full transition-all py-1 px-4 border border-primary-mid rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-light focus:border-primary-dark focus:ring-transparent outline-none ${className}`}
             {...props}
         />
     );
