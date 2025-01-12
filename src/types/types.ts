@@ -26,7 +26,7 @@ export interface DogData {
     life_span: string;
     temperament?: string;
     origin?: string;
-    reference_image_id?: string;
+    reference_image_id: string;
     image: {
         id: string;
         width: number;
@@ -40,6 +40,8 @@ export interface Dog {
     name: string;
     bredFor?: string;
     lifeSpan: string;
+    temperament?: string;
+    origin?: string;
     referenceImageId: string;
     image: {
         url: string;

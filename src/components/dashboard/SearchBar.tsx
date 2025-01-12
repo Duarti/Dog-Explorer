@@ -2,7 +2,7 @@ import StyledInput from "../StyledInput";
 
 interface SearchBarProps {
     value: string;
-    onChange: (value: string) => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {

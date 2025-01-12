@@ -4,6 +4,7 @@ import { Dog } from '../../types/types';
 import StyledButton from '../StyledButton';
 import StyledModal from '../StyledModal';
 import { DogsContext } from '../../context/DogsContext';
+import { useNavigate } from 'react-router-dom';
 
 interface DogCardProps {
     dog: Dog;
@@ -14,9 +15,11 @@ interface DogCardProps {
 const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const { setContextDogs } = useContext(DogsContext);
+    const navigate = useNavigate();
 
     const onDetailsClick = (e: React.MouseEvent) => {
         e.stopPropagation();
+        navigate(`/details/${dog.id}`);
     };
 
     const onDeleteClick = (e: React.MouseEvent) => {
