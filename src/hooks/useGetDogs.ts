@@ -18,6 +18,8 @@ const useGetDogs = ({ searchQuery, sortOption }: UseDogsProps) => {
     
     const localDogs = getLocalDogs();
     const hasLocalDogs = Boolean(localDogs.length);
+    const firstQueryDone = localStorage.getItem("first-query")
+    
 
     // Don't fetch if we have dogs in local storage
     const {
@@ -25,11 +27,15 @@ const useGetDogs = ({ searchQuery, sortOption }: UseDogsProps) => {
         error,
         isLoading,
         isFetching,
-    } = useFetchDogs(!hasLocalDogs);
+    } = useFetchDogs(!hasLocalDogs || !firstQueryDone);
 
     // If we have dogs in local storage, set the context dogs to the local dogs (this will write into local storage as well)
     useEffect(() => {
-        if (!hasLocalDogs && fetchedDogs) setContextDogs(fetchedDogs);
+        if(!fetchedDogs) return
+        if (!hasLocalDogs || !firstQueryDone) setContextDogs(fetchedDogs);
+        if(!firstQueryDone) {
+            localStorage.setItem("first-query", "true")
+        }
     }, [fetchedDogs]);
 
     const combinedDogs = contextDogs.length > 0 ? contextDogs : fetchedDogs;
