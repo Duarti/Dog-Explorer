@@ -19,7 +19,7 @@ const StyledButton: React.FC<StyledButtonProps> = ({
 
     return (
         <button
-            className={`px-4 py-1 text-sm font-medium rounded-md transition shadow focus:outline-none focus:ring-0 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${typeStyle} ${className}`}
+            className={`px-4 py-1 text-sm font-medium rounded-md hover:transition shadow focus:outline-none focus:ring-0 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${typeStyle} ${className}`}
             {...props}
         >
             {children}
