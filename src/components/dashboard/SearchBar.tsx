@@ -3,17 +3,17 @@ import StyledInput from "../StyledInput";
 interface SearchBarProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    className?: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, className = '' }) => {
     return (
-        <div className="mb-4">
             <StyledInput
                 value={value}
                 onChange={onChange}
                 placeholder="Search dogs by name..."
+                className={className}
             />
-        </div>
     );
 };
 

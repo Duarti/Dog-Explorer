@@ -81,40 +81,51 @@ const Dashboard: React.FC = () => {
             <div className="p-4 max-w-[1400px] min-w-[100%]">
                 <div className="border rounded-lg">
                     <div className={`p-${theme.spacing.sm} pb-0`}>
-                        <div className="mb-4">
-                            <SortSelect
-                                value={sortOption}
-                                onChange={setSortOption}
+                        <div className="flex justify-center">
+                            <SearchBar
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="max-w-[600px] flex-1 mb-4"
                             />
                         </div>
-                        <SearchBar
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                        <div className="flex justify-between w-full mb-4">
-                                <StyledCheckbox
-                                    checked={selectedAll}
-                                    onChange={onSelectAll}
-                                    label="Select All"
+                        <div className="flex flex-col md:flex-row justify-between w-full mb-4 gap-5">
+                            <StyledCheckbox
+                                checked={selectedAll}
+                                onChange={onSelectAll}
+                                label="Select All"
+                                className="lg:w-auto"
+                                labelClassName="order-2 md:order-1"
+                            />
+                            <div className="flex flex-col md:flex-row items-center gap-5 lg:min-w-[400px] order-1 md:order-2">
+                                <SortSelect
+                                    value={sortOption}
+                                    onChange={setSortOption}
+                                    className="w-[100%] md:w-[50%]"
                                 />
-                            <StyledButton
-                                onClick={() =>
-                                    handleVote({
-                                        imageIds: selectedDogs.map((dogId) => {
-                                            return (
-                                                dogs.find(
-                                                    (dog) => dog.id === dogId
-                                                )?.referenceImageId || ''
-                                            );
-                                        }),
-                                    })
-                                }
-                                disabled={voteLoading || !selectedSome}
-                            >
-                                {voteLoading
-                                    ? 'Upvoting...'
-                                    : 'Upvote Selected'}
-                            </StyledButton>
+                                <StyledButton
+                                    onClick={() =>
+                                        handleVote({
+                                            imageIds: selectedDogs.map(
+                                                (dogId) => {
+                                                    return (
+                                                        dogs.find(
+                                                            (dog) =>
+                                                                dog.id === dogId
+                                                        )?.referenceImageId ||
+                                                        ''
+                                                    );
+                                                }
+                                            ),
+                                        })
+                                    }
+                                    disabled={voteLoading || !selectedSome}
+                                    className="w-[100%] md:w-[50%]"
+                                >
+                                    {voteLoading
+                                        ? 'Upvoting...'
+                                        : 'Upvote Selected'}
+                                </StyledButton>
+                            </div>
                         </div>
                     </div>
 

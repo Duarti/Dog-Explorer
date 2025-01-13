@@ -5,6 +5,7 @@ import StyledSelect from '../StyledSelect';
 interface SortSelectProps {
     value: SORT_OPTION_ENUM;
     onChange: (option: SORT_OPTION_ENUM) => void;
+    className?: string;
 }
 
 const sortOptions: { value: SORT_OPTION_ENUM; label: string }[] = [
@@ -20,8 +21,8 @@ const sortOptions: { value: SORT_OPTION_ENUM; label: string }[] = [
     },
 ];
 
-const SortSelect: React.FC<SortSelectProps> = ({ value, onChange }) => (
-    <StyledSelect value={value} onChange={(e) => onChange(Number(e.target.value) as SORT_OPTION_ENUM)} options={sortOptions} />
+const SortSelect: React.FC<SortSelectProps> = ({ value, onChange, className = '' }) => (
+    <StyledSelect value={value} onChange={(e) => onChange(Number(e.target.value) as SORT_OPTION_ENUM)} options={sortOptions} className={className} />
 );
 
 export default SortSelect;
