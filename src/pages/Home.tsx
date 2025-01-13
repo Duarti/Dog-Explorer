@@ -27,7 +27,7 @@ const homeDogInfo = [
 const Home: React.FC = () => {
     return (
         <div
-            className="flex flex-col min-h-screen text-center p-6"
+            className="flex flex-col text-center p-6 min-h-[100%]"
             style={{
                 backgroundImage: 'url(/assets/dog_wallpaper.jpg)',
                 backgroundSize: 'cover',

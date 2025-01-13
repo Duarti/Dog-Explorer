@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import EditableField from '../components/EditableField';
 import StyledButton from '../components/StyledButton';
 import useGetDog from '../hooks/useGetDog';
@@ -11,6 +11,7 @@ import Loading from '../components/Loading';
 import StyledImage from '../components/StyledImage';
 import message from '../components/Message';
 import { validateAllFields, validateField } from '../utils/validate';
+import BackArrowIcon from '/assets/back_arrow_icon.svg';
 
 const buttonStyle = 'px-4 py-2 min-w-[10rem] flex-1 lg:flex-[0]';
 
@@ -20,6 +21,7 @@ const Details = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const { setContextDogs } = useContext(DogsContext);
+    const navigate = useNavigate()
 
     const { dog, error, isLoading, isFetching } = useGetDog(Number(id));
 
@@ -79,6 +81,11 @@ const Details = () => {
         setIsEditing(false);
         setErrors({});
     };
+
+    const onBackClick = () => {
+        navigate('/dashboard', { replace: false });
+    }
+
     const handleSave = () => {
         const newErrors = validateAllFields(fields, editingDog || {});
         setErrors(newErrors);
@@ -108,9 +115,24 @@ const Details = () => {
 
     return (
         <div className="max-w-[1000px] mx-auto p-6">
-            <h1 className="text-4xl font-bold mb-6 text-center text-gray-900">
-                Dog Details
-            </h1>
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex-1">
+                    <StyledButton buttonType='secondary' onClick={onBackClick}>
+                        <div className="flex items-center justify-center gap-5">
+                            <StyledImage
+                                src={BackArrowIcon}
+                                alt="Delete"
+                                className={`w-5 h-5`}
+                            />
+                            <p>Back to Dashboard</p>
+                        </div>
+                    </StyledButton>
+                </div>
+                <h1 className="text-4xl font-bold text-center sel-center text-gray-900 flex-1">
+                    Dog Details
+                </h1>
+                <div className="flex-1" />
+            </div>
             <div className="flex flex-col lg:flex-row bg-white text-gray-800 rounded-lg shadow-lg overflow-hidden relative min-h-48">
                 {error ? (
                     <ErrorMessage />
