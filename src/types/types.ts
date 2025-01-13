@@ -48,4 +48,11 @@ export interface Dog {
     };
 }
 
+export interface FormField {
+    label: string;
+    name: string;
+    value: string;
+    required: boolean;
+}
+
 export type ButtonType = 'primary' | 'secondary';

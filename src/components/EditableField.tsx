@@ -23,7 +23,7 @@ const EditableField: React.FC<EditableFieldProps> = ({
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className={`mx-4 flex-[2] border rounded ${
+            className={`md:mx-4 flex-[2] border rounded w-full ${
                 isEditing
                     ? ""
                     : "border-transparent bg-transparent font-medium focus:border-transparent"

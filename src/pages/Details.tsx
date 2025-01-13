@@ -3,14 +3,16 @@ import { useParams } from 'react-router-dom';
 import EditableField from '../components/EditableField';
 import StyledButton from '../components/StyledButton';
 import useGetDog from '../hooks/useGetDog';
-import { Dog } from '../types/types';
+import { Dog, FormField } from '../types/types';
 import { DogsContext } from '../context/DogsContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 import Loading from '../components/Loading';
 import StyledImage from '../components/StyledImage';
+import message from '../components/Message';
+import { validateAllFields, validateField } from '../utils/validate';
 
-const buttonStyle = 'px-4 py-2';
+const buttonStyle = 'px-4 py-2 min-w-[10rem] flex-1 lg:flex-[0]';
 
 const Details = () => {
     const { id } = useParams<{ id: string }>();
@@ -25,53 +27,37 @@ const Details = () => {
         if (dog) setEditingDog(dog);
     }, [dog]);
 
-    const validateField = (name: string, value: string) => {
-        let error = '';
-        const fieldName =
-            fields.find((field) => field.name === name)?.label || '';
-        if (!value.trim()) {
-            error = `${fieldName} is required.`;
-        } else if (value.trim().length < 2) {
-            error = `${fieldName} must be at least 2 characters.`;
-        } else if (name === 'lifeSpan') {
-            const lifeSpanRegex = /^\d+(?:\s-\s\d+)?\syears$/;
-            if (!lifeSpanRegex.test(value)) {
-                error = `${fieldName} must be in the format "x - y years" or "x years".`;
-            }
-        }
-        return error;
-    };
-
-    const validateAllFields = () => {
-        const newErrors: Record<string, string> = {};
-        if (editingDog) {
-            for (const field of Object.keys(editingDog)) {
-                const value = (editingDog as any)[field];
-                newErrors[field] = validateField(field, value);
-            }
-        }
-        setErrors(newErrors);
-        return Object.values(newErrors).every((error) => !error);
-    };
-
-    const fields = [
-        { label: 'Name', name: 'name', value: editingDog?.name || '' },
+    const fields: FormField[] = [
+        {
+            label: 'Name',
+            name: 'name',
+            value: editingDog?.name || '',
+            required: true,
+        },
         {
             label: 'Bred For',
             name: 'bredFor',
             value: editingDog?.bredFor || '',
+            required: false,
         },
         {
             label: 'Life Span',
             name: 'lifeSpan',
             value: editingDog?.lifeSpan || '',
+            required: true,
         },
         {
             label: 'Temperament',
             name: 'temperament',
             value: editingDog?.temperament || '',
+            required: false,
         },
-        { label: 'Origin', name: 'origin', value: editingDog?.origin || '' },
+        {
+            label: 'Origin',
+            name: 'origin',
+            value: editingDog?.origin || '',
+            required: false,
+        },
     ];
 
     const handleEditToggle = () => {
@@ -84,7 +70,7 @@ const Details = () => {
         setEditingDog((prev) => (prev ? { ...prev, [name]: value } : prev));
         setErrors((prevErrors) => ({
             ...prevErrors,
-            [name]: validateField(name, value),
+            [name]: validateField(fields, name, value),
         }));
     };
 
@@ -93,9 +79,11 @@ const Details = () => {
         setIsEditing(false);
         setErrors({});
     };
-
     const handleSave = () => {
-        if (!validateAllFields()) return;
+        const newErrors = validateAllFields(fields, editingDog || {});
+        setErrors(newErrors);
+        if (Object.values(newErrors).some((error) => error)) return;
+
         setIsEditing(false);
         setContextDogs((prevContextDogs) =>
             prevContextDogs.map((contextDog) => {
@@ -105,6 +93,7 @@ const Details = () => {
                 return contextDog;
             })
         );
+        message.success('Dog updated successfully');
     };
 
     const hasValidationErrors = Object.values(errors).some(Boolean);
@@ -118,28 +107,28 @@ const Details = () => {
     }
 
     return (
-        <div className="max-w-5xl mx-auto p-6">
+        <div className="max-w-[1000px] mx-auto p-6">
             <h1 className="text-4xl font-bold mb-6 text-center text-gray-900">
                 Dog Details
             </h1>
-            <div className="flex flex-col md:flex-row bg-white text-gray-800 rounded-lg shadow-lg overflow-hidden relative min-h-48">
+            <div className="flex flex-col lg:flex-row bg-white text-gray-800 rounded-lg shadow-lg overflow-hidden relative min-h-48">
                 {error ? (
                     <ErrorMessage />
                 ) : isLoading || isFetching || !editingDog ? (
                     <Loading />
                 ) : (
                     <>
-                        <div className="md:w-1/3">
+                        <div className="lg:w-1/2 h-full">
                             <StyledImage
                                 src={editingDog.image.url}
                                 alt={editingDog.name}
                                 className="w-full h-full object-cover"
                             />
                         </div>
-                        <div className="md:w-2/3 p-6 space-y-4">
+                        <div className="lg:w-1/2 p-6 space-y-4">
                             {fields.map((field) => (
                                 <div
-                                    className="flex items-center mb-4 relative"
+                                    className="flex flex-col sm:flex-row lg:items-center mb-4 relative"
                                     key={field.name}
                                 >
                                     <label className="flex-1 font-medium">
@@ -153,16 +142,23 @@ const Details = () => {
                                             onChange={handleChange}
                                         />
                                         {errors[field.name] && (
-                                            <span className="absolute right-[-10px] top-[90%] text-red-500 text-sm ml-2">
+                                            <span className="absolute right-0 lg:right-[-10px] top-[90%] text-red-500 text-sm ml-2">
                                                 {errors[field.name]}
                                             </span>
                                         )}
                                     </div>
                                 </div>
                             ))}
-                            <div className="mt-6 flex space-x-4">
+                            <div className="mt-6 flex space-x-4 justify-center lg:justify-end self-end">
                                 {isEditing ? (
                                     <>
+                                        <StyledButton
+                                            onClick={onCancel}
+                                            buttonType="secondary"
+                                            className={buttonStyle}
+                                        >
+                                            Cancel
+                                        </StyledButton>
                                         <StyledButton
                                             onClick={handleSave}
                                             className={buttonStyle}
@@ -174,13 +170,6 @@ const Details = () => {
                                             }
                                         >
                                             Save
-                                        </StyledButton>
-                                        <StyledButton
-                                            onClick={onCancel}
-                                            buttonType="secondary"
-                                            className={buttonStyle}
-                                        >
-                                            Cancel
                                         </StyledButton>
                                     </>
                                 ) : (
