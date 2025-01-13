@@ -1,3 +1,5 @@
+import React from "react";
+
 interface StyledSelectProps<T>
     extends React.SelectHTMLAttributes<HTMLSelectElement> {
     options: { value: T; label: string }[];
@@ -11,7 +13,7 @@ const StyledSelect = <T extends string | number>({
 }: StyledSelectProps<T>) => {
     return (
         <select
-            className={`w-full py-1 px-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${className}`}
+            className={`w-full transition-all py-1 px-4 border border-primary-mid rounded-lg shadow-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-primary-light focus:border-primary-dark focus:ring-transparent bg-white ${className}`}
             {...props}
         >
             {options.map((option) => (

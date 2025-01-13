@@ -92,15 +92,11 @@ const Dashboard: React.FC = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                         <div className="flex justify-between w-full mb-4">
-                            {selectedSome ? (
                                 <StyledCheckbox
                                     checked={selectedAll}
                                     onChange={onSelectAll}
                                     label="Select All"
                                 />
-                            ) : (
-                                <div />
-                            )}
                             <StyledButton
                                 onClick={() =>
                                     handleVote({

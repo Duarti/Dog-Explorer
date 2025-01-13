@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledButton from '../components/StyledButton';
+import StyledImage from '../components/StyledImage';
 
 const homeDogInfo = [
     {
@@ -50,7 +51,7 @@ const Home: React.FC = () => {
                         key={index}
                         className="p-4 border rounded shadow-sm bg-white bg-opacity-75 min-h-72"
                     >
-                        <img
+                        <StyledImage
                             src={dog.imageUrl}
                             alt={dog.name}
                             className="w-full h-48 object-contain md:object-cover rounded mb-4"

@@ -8,6 +8,7 @@ import { DogsContext } from '../context/DogsContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 import Loading from '../components/Loading';
+import StyledImage from '../components/StyledImage';
 
 const buttonStyle = 'px-4 py-2';
 
@@ -129,7 +130,7 @@ const Details = () => {
                 ) : (
                     <>
                         <div className="md:w-1/3">
-                            <img
+                            <StyledImage
                                 src={editingDog.image.url}
                                 alt={editingDog.name}
                                 className="w-full h-full object-cover"

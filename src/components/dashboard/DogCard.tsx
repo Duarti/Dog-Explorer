@@ -5,6 +5,7 @@ import StyledButton from '../StyledButton';
 import StyledModal from '../StyledModal';
 import { DogsContext } from '../../context/DogsContext';
 import { useNavigate } from 'react-router-dom';
+import StyledImage from '../StyledImage';
 
 interface DogCardProps {
     dog: Dog;
@@ -45,7 +46,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
             }`}
             onClick={() => onSelect(dog.id)}
         >
-            <img
+            <StyledImage
                 src={dog.image.url}
                 alt={dog.name}
                 className="w-full h-72 object-cover"
@@ -62,7 +63,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
                         Details
                     </StyledButton>
                     <button onClick={onDeleteClick}>
-                        <img
+                        <StyledImage
                             src={TrashIcon}
                             alt="Delete"
                             className={`w-5 h-5 transition-transform duration-200 hover:scale-125 ${deleteModalVisible ? 'scale-125' : ''}`}
