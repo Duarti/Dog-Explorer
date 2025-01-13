@@ -12,8 +12,7 @@ import StyledCheckbox from '../components/StyledCheckbox';
 import useHandleVote from '../hooks/useHandleVote';
 import StyledButton from '../components/StyledButton';
 import { theme } from '../styles/theme';
-
-const ITEMS_PER_PAGE = 12;
+import { ITEMS_PER_PAGE } from '../utils/constants';
 
 const Dashboard: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -47,6 +46,14 @@ const Dashboard: React.FC = () => {
             sort: String(sortOption),
         });
     }, [currentPage, searchQuery, sortOption, setSearchParams]);
+
+    useEffect(() => {
+        if (currentPage > pageCount) {
+            setCurrentPage(pageCount);
+        }
+    }, [currentPage, dogs]);
+
+    const pageCount = Math.max(1, Math.ceil(dogs.length / ITEMS_PER_PAGE));
 
     const onPageChange = (page: number) => {
         setCurrentPage(page);
@@ -86,50 +93,57 @@ const Dashboard: React.FC = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="max-w-[600px] flex-1 mb-4"
+                                disabled={
+                                    isFetching || isLoading || Boolean(error)
+                                }
                             />
                         </div>
-                        <div className="flex flex-col md:flex-row justify-between w-full mb-4 gap-5">
-                            <StyledCheckbox
-                                checked={selectedAll}
-                                onChange={onSelectAll}
-                                label="Select All"
-                                className="lg:w-auto"
-                                labelClassName="order-2 md:order-1"
-                            />
-                            <div className="flex flex-col md:flex-row items-center gap-5 lg:min-w-[400px] order-1 md:order-2">
-                                <SortSelect
-                                    value={sortOption}
-                                    onChange={setSortOption}
-                                    className="w-[100%] md:w-[50%]"
+                        {dogs.length > 0 && (
+                            <div className="flex flex-col md:flex-row justify-between w-full mb-4 gap-5">
+                                <StyledCheckbox
+                                    checked={selectedAll}
+                                    onChange={onSelectAll}
+                                    label="Select All"
+                                    className="lg:w-auto"
+                                    labelClassName="order-2 md:order-1"
                                 />
-                                <StyledButton
-                                    onClick={() =>
-                                        handleVote({
-                                            imageIds: selectedDogs.map(
-                                                (dogId) => {
-                                                    return (
-                                                        dogs.find(
-                                                            (dog) =>
-                                                                dog.id === dogId
-                                                        )?.referenceImageId ||
-                                                        ''
-                                                    );
-                                                }
-                                            ),
-                                        })
-                                    }
-                                    disabled={voteLoading || !selectedSome}
-                                    className="w-[100%] md:w-[50%]"
-                                >
-                                    {voteLoading
-                                        ? 'Upvoting...'
-                                        : 'Upvote Selected'}
-                                </StyledButton>
+                                <div className="flex flex-col md:flex-row items-center gap-5 lg:min-w-[400px] order-1 md:order-2">
+                                    <SortSelect
+                                        value={sortOption}
+                                        onChange={setSortOption}
+                                        className="w-[100%] md:w-[50%]"
+                                    />
+                                    <StyledButton
+                                        onClick={() =>
+                                            handleVote({
+                                                imageIds: selectedDogs.map(
+                                                    (dogId) => {
+                                                        return (
+                                                            dogs.find(
+                                                                (dog) =>
+                                                                    dog.id ===
+                                                                    dogId
+                                                            )
+                                                                ?.referenceImageId ||
+                                                            ''
+                                                        );
+                                                    }
+                                                ),
+                                            })
+                                        }
+                                        disabled={voteLoading || !selectedSome}
+                                        className="w-[100%] md:w-[50%]"
+                                    >
+                                        {voteLoading
+                                            ? 'Upvoting...'
+                                            : 'Upvote Selected'}
+                                    </StyledButton>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
 
-                    <div className="h-[calc(100vh-200px)] overflow-y-auto no-scrollbar">
+                    <div className="overflow-y-auto no-scrollbar">
                         {isLoading || isFetching ? (
                             <LoadingSpinner />
                         ) : error ? (
@@ -146,7 +160,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
-                    pageCount={Math.ceil(dogs.length / ITEMS_PER_PAGE)}
+                    pageCount={pageCount}
                     onPageChange={onPageChange}
                     disabled={isLoading || Boolean(error)}
                 />

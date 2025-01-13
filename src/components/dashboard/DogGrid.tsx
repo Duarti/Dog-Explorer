@@ -1,4 +1,5 @@
 import { Dog } from '../../types/types';
+import { ITEMS_PER_PAGE } from '../../utils/constants';
 import DogCard from './DogCard';
 
 interface DogGridProps {
@@ -8,14 +9,16 @@ interface DogGridProps {
     currentPage: number;
 }
 
-const ITEMS_PER_PAGE = 12;
-
 const DogGrid: React.FC<DogGridProps> = ({
     dogs,
     selectedDogs,
     onSelectDog,
     currentPage,
 }) => {
+    if (dogs.length === 0) {
+        return <p className="text-center text-gray-500">No dogs to show.</p>;
+    }
+
     const paginatedDogs = dogs.slice(
         (currentPage - 1) * ITEMS_PER_PAGE,
         currentPage * ITEMS_PER_PAGE
