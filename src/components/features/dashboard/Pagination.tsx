@@ -1,4 +1,3 @@
-import { theme } from '@/styles/theme';
 import StyledButton from '@components/shared/StyledButton';
 
 interface PaginationProps {
@@ -14,15 +13,11 @@ const Pagination: React.FC<PaginationProps> = ({
     onPageChange,
     disabled = false,
 }) => (
-    <div
-        className={`flex flex-col gap-${theme.spacing.xs} items-center justify-center mt-${theme.spacing.sm}`}
-    >
+    <div className="flex flex-col gap-2 items-center justify-center mt-4">
         <div className="px-4">
             Page {disabled ? '-' : currentPage} of {disabled ? '-' : pageCount}
         </div>
-        <div
-            className={`flex justify-center items-center gap-${theme.spacing.sm}`}
-        >
+        <div className={`flex justify-center items-center gap-4`}>
             <StyledButton
                 onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
                 disabled={currentPage === 1 || disabled}

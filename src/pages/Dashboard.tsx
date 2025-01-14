@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SORT_OPTION_ENUM, VOTE_ENUM } from '@/types/types';
-import { theme } from '@/styles/theme';
 import { ITEMS_PER_PAGE } from '@utils/constants';
 import useHandleVoteLocally from '@hooks/useHandleVoteLocally';
 import useGetDogs from '@hooks/useGetDogs';
@@ -83,6 +82,14 @@ const Dashboard: React.FC = () => {
         message.success(`${dogIds.length} dogs voted successfully.`);
     };
 
+    const hasUpvotedDogsSelected = dogs.some(dog => {
+        return selectedDogs.includes(dog.id) && dog.voted
+    })
+
+    const hasDownvotedDogsSelected = dogs.some(dog => {
+        return selectedDogs.includes(dog.id) && !dog.voted
+    })
+
     const selectedAll = selectedDogs.length === dogs.length;
     const selectedSome = selectedDogs.length > 0;
 
@@ -90,7 +97,7 @@ const Dashboard: React.FC = () => {
         <div className="flex flex-col justify-center items-center">
             <div className="p-4 max-w-[1400px] min-w-[100%]">
                 <div className="border rounded-lg">
-                    <div className={`p-${theme.spacing.sm} pb-0`}>
+                    <div className={`p-4 pb-0`}>
                         <div className="flex justify-center">
                             <SearchBar
                                 value={searchQuery}
@@ -123,7 +130,7 @@ const Dashboard: React.FC = () => {
                                                 VOTE_ENUM.UPVOTE
                                             )
                                         }
-                                        disabled={!selectedSome}
+                                        disabled={!selectedSome || !hasDownvotedDogsSelected}
                                         className="w-[100%] md:w-[50%]"
                                     >
                                         Upvote
@@ -135,7 +142,7 @@ const Dashboard: React.FC = () => {
                                                 VOTE_ENUM.DOWNVOTE
                                             )
                                         }
-                                        disabled={!selectedSome}
+                                        disabled={!selectedSome || !hasUpvotedDogsSelected}
                                         className="w-[100%] md:w-[50%]"
                                     >
                                         Downvote

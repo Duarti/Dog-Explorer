@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Layout from '@/pages/Layout';
@@ -15,28 +15,30 @@ const queryClient = new QueryClient();
 
 function App() {
     return (
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <DogsProvider>
-                <QueryClientProvider client={queryClient}>
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <Routes>
-                            <Route path="/" element={<Layout />}>
-                                <Route index element={<Home />} />
-                                <Route
-                                    path="dashboard"
-                                    element={<Dashboard />}
-                                />
-                                <Route
-                                    path="details/:id"
-                                    element={<Details />}
-                                />
-                                <Route path="*" element={<NotFound />} />
-                            </Route>
-                        </Routes>
-                    </Suspense>
-                </QueryClientProvider>
-            </DogsProvider>
-        </ErrorBoundary>
+        <BrowserRouter>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <DogsProvider>
+                    <QueryClientProvider client={queryClient}>
+                        <Suspense fallback={<LoadingSpinner />}>
+                            <Routes>
+                                <Route path="/" element={<Layout />}>
+                                    <Route index element={<Home />} />
+                                    <Route
+                                        path="dashboard"
+                                        element={<Dashboard />}
+                                    />
+                                    <Route
+                                        path="details/:id"
+                                        element={<Details />}
+                                    />
+                                    <Route path="*" element={<NotFound />} />
+                                </Route>
+                            </Routes>
+                        </Suspense>
+                    </QueryClientProvider>
+                </DogsProvider>
+            </ErrorBoundary>
+        </BrowserRouter>
     );
 }
 
