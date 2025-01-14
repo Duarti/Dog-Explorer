@@ -27,6 +27,10 @@ export const sortDogs = (dogs: Dog[], sortOption: SORT_OPTION_ENUM): Dog[] => {
                     getAverageLifespan(b.lifeSpan) -
                     getAverageLifespan(a.lifeSpan)
             );
+        case SORT_OPTION_ENUM.UPVOTED_ASC:
+            return sortedDogs.sort((a, b) => Number(b.voted) - Number(a.voted));
+        case SORT_OPTION_ENUM.UPVOTED_DESC:
+            return sortedDogs.sort((a, b) => Number(a.voted) - Number(b.voted));
         default:
             return sortedDogs;
     }

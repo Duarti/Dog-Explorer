@@ -19,6 +19,14 @@ const sortOptions: { value: SORT_OPTION_ENUM; label: string }[] = [
         value: SORT_OPTION_ENUM.LIFESPAN_DESC,
         label: 'Life Span (Longest to Shortest)',
     },
+    {
+        value: SORT_OPTION_ENUM.UPVOTED_ASC,
+        label: 'Vote (Upvoted first)',
+    },
+    {
+        value: SORT_OPTION_ENUM.UPVOTED_DESC,
+        label: 'Vote (Downvoted first)',
+    },
 ];
 
 const SortSelect: React.FC<SortSelectProps> = ({ value, onChange, className = '' }) => (

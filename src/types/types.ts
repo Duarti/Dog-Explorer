@@ -8,6 +8,8 @@ export enum SORT_OPTION_ENUM {
     NAME_DESC,
     LIFESPAN_ASC,
     LIFESPAN_DESC,
+    UPVOTED_ASC,
+    UPVOTED_DESC,
 }
 
 export interface DogData {
@@ -43,6 +45,7 @@ export interface Dog {
     temperament?: string;
     origin?: string;
     referenceImageId: string;
+    voted?: boolean;
     image: {
         url: string;
     };

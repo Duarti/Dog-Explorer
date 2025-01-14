@@ -6,13 +6,14 @@ import DogGrid from '../components/dashboard/DogGrid';
 import Pagination from '../components/dashboard/Pagination';
 import SearchBar from '../components/dashboard/SearchBar';
 import SortSelect from '../components/dashboard/SortSelect';
-import { SORT_OPTION_ENUM } from '../types/types';
+import { SORT_OPTION_ENUM, VOTE_ENUM } from '../types/types';
 import useGetDogs from '../hooks/useGetDogs';
 import StyledCheckbox from '../components/StyledCheckbox';
-import useHandleVote from '../hooks/useHandleVote';
 import StyledButton from '../components/StyledButton';
 import { theme } from '../styles/theme';
 import { ITEMS_PER_PAGE } from '../utils/constants';
+import useHandleVoteLocally from '../hooks/useHandleVoteLocally';
+import message from '../components/Message';
 
 const Dashboard: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -33,11 +34,7 @@ const Dashboard: React.FC = () => {
         sortOption,
     });
 
-    const {
-        handleVote,
-        isLoading: voteLoading,
-        isError: voteError,
-    } = useHandleVote({ onFinish: () => setSelectedDogs([]) });
+    const handleVoteLocally = useHandleVoteLocally();
 
     useEffect(() => {
         setSearchParams({
@@ -80,6 +77,12 @@ const Dashboard: React.FC = () => {
         });
     };
 
+    const onVote = (dogIds: number[], voteType: VOTE_ENUM) => {
+        handleVoteLocally(dogIds, voteType);
+        setSelectedDogs([]);
+        message.success(`${dogIds.length} dogs voted successfully.`);
+    };
+
     const selectedAll = selectedDogs.length === dogs.length;
     const selectedSome = selectedDogs.length > 0;
 
@@ -115,28 +118,27 @@ const Dashboard: React.FC = () => {
                                     />
                                     <StyledButton
                                         onClick={() =>
-                                            handleVote({
-                                                imageIds: selectedDogs.map(
-                                                    (dogId) => {
-                                                        return (
-                                                            dogs.find(
-                                                                (dog) =>
-                                                                    dog.id ===
-                                                                    dogId
-                                                            )
-                                                                ?.referenceImageId ||
-                                                            ''
-                                                        );
-                                                    }
-                                                ),
-                                            })
+                                            onVote(
+                                                selectedDogs,
+                                                VOTE_ENUM.UPVOTE
+                                            )
                                         }
-                                        disabled={voteLoading || !selectedSome}
+                                        disabled={!selectedSome}
                                         className="w-[100%] md:w-[50%]"
                                     >
-                                        {voteLoading
-                                            ? 'Upvoting...'
-                                            : 'Upvote Selected'}
+                                        Upvote
+                                    </StyledButton>
+                                    <StyledButton
+                                        onClick={() =>
+                                            onVote(
+                                                selectedDogs,
+                                                VOTE_ENUM.DOWNVOTE
+                                            )
+                                        }
+                                        disabled={!selectedSome}
+                                        className="w-[100%] md:w-[50%]"
+                                    >
+                                        Downvote
                                     </StyledButton>
                                 </div>
                             </div>

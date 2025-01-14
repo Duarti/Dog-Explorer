@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import TrashIcon from '/assets/trash_icon.svg';
+import StarIcon from '/assets/star_icon.svg';
 import { Dog } from '../../types/types';
 import StyledButton from '../StyledButton';
 import StyledModal from '../StyledModal';
@@ -39,7 +40,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
         <div
             className={`rounded-lg shadow-lg border cursor-pointer ${
                 isSelected
-                    ? 'border-blue-500 bg-blue-50'
+                    ? 'border-primary-mid bg-orange-50'
                     : 'border-gray-200 bg-white'
             } overflow-hidden transition transform ${
                 isSelected ? 'scale-105 shadow-xl' : 'scale-100'
@@ -52,8 +53,9 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
                 className="w-full h-72 object-cover"
             />
             <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800">
+                <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
                     {dog.name}
+                    {dog.voted && <img src={StarIcon} className="w-5 h-5" />}
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
                     Life span: {dog.lifeSpan}
@@ -63,7 +65,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog, isSelected, onSelect }) => {
                         Details
                     </StyledButton>
                     <button onClick={onDeleteClick}>
-                        <StyledImage
+                        <img
                             src={TrashIcon}
                             alt="Delete"
                             className={`w-5 h-5 transition-transform duration-200 hover:scale-125 ${deleteModalVisible ? 'scale-125' : ''}`}

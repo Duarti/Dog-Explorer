@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import StyledButton from './StyledButton';
-import StyledImage from './StyledImage';
 import BackArrowIcon from '/assets/back_arrow_icon.svg';
 
 const DashboardHeader = () => {
@@ -15,7 +14,7 @@ const DashboardHeader = () => {
             <div className="flex-1 min-w-16">
                 <StyledButton buttonType="secondary" onClick={onBackClick}>
                     <div className="flex items-center justify-center gap-5">
-                        <StyledImage
+                        <img
                             src={BackArrowIcon}
                             alt="Delete"
                             className={`w-5 h-5`}
