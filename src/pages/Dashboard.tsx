@@ -13,6 +13,7 @@ import StyledCheckbox from '@components/shared/StyledCheckbox';
 import StyledButton from '@components/shared/StyledButton';
 import message from '@components/shared/Message';
 import Loading from '@/components/shared/Loading';
+import useDebounce from '@hooks/useDebounce';
 
 const Dashboard: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -22,26 +23,25 @@ const Dashboard: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState<string>(
         searchParams.get('query') || ''
     );
+    const debouncedSearchQuery = useDebounce(searchQuery, 300);
     const [sortOption, setSortOption] = useState<SORT_OPTION_ENUM>(
         (searchParams.get('sort') ||
             SORT_OPTION_ENUM.NAME_ASC) as SORT_OPTION_ENUM
     );
     const [selectedDogs, setSelectedDogs] = useState<number[]>([]);
-
     const { dogs, error, isLoading, isFetching } = useGetDogs({
-        searchQuery,
+        searchQuery: debouncedSearchQuery,
         sortOption,
     });
-
     const handleVoteLocally = useHandleVoteLocally();
 
     useEffect(() => {
         setSearchParams({
             page: String(currentPage),
-            query: searchQuery,
+            query: debouncedSearchQuery,
             sort: String(sortOption),
         });
-    }, [currentPage, searchQuery, sortOption, setSearchParams]);
+    }, [currentPage, debouncedSearchQuery, sortOption, setSearchParams]);
 
     useEffect(() => {
         if (currentPage > pageCount) {
