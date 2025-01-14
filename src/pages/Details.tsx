@@ -6,7 +6,6 @@ import { DogsContext } from '@/context/DogsContext';
 import useGetDog from '@hooks/useGetDog';
 import EditableField from '@components/features/details/EditableField';
 import StyledButton from '@components/shared/StyledButton';
-import LoadingSpinner from '@components/shared/LoadingSpinner';
 import ErrorMessage from '@components/util/ErrorMessage';
 import Loading from '@components/shared/Loading';
 import StyledImage from '@components/shared/StyledImage';
@@ -99,14 +98,6 @@ const Details = () => {
     };
 
     const hasValidationErrors = Object.values(errors).some(Boolean);
-
-    if (error) {
-        return <ErrorMessage />;
-    }
-
-    if (isLoading || isFetching || !editingDog) {
-        return <LoadingSpinner />;
-    }
 
     return (
         <div className="max-w-[1000px] mx-auto p-6">

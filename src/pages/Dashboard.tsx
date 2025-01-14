@@ -4,7 +4,6 @@ import { SORT_OPTION_ENUM, VOTE_ENUM } from '@/types/types';
 import { ITEMS_PER_PAGE } from '@utils/constants';
 import useHandleVoteLocally from '@hooks/useHandleVoteLocally';
 import useGetDogs from '@hooks/useGetDogs';
-import LoadingSpinner from '@components/shared/LoadingSpinner';
 import ErrorMessage from '@components/util/ErrorMessage';
 import DogGrid from '@components/features/dashboard/DogGrid';
 import Pagination from '@components/features/dashboard/Pagination';
@@ -13,6 +12,7 @@ import SortSelect from '@components/features/dashboard/SortSelect';
 import StyledCheckbox from '@components/shared/StyledCheckbox';
 import StyledButton from '@components/shared/StyledButton';
 import message from '@components/shared/Message';
+import Loading from '@/components/shared/Loading';
 
 const Dashboard: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -82,13 +82,13 @@ const Dashboard: React.FC = () => {
         message.success(`${dogIds.length} dogs voted successfully.`);
     };
 
-    const hasUpvotedDogsSelected = dogs.some(dog => {
-        return selectedDogs.includes(dog.id) && dog.voted
-    })
+    const hasUpvotedDogsSelected = dogs.some((dog) => {
+        return selectedDogs.includes(dog.id) && dog.voted;
+    });
 
-    const hasDownvotedDogsSelected = dogs.some(dog => {
-        return selectedDogs.includes(dog.id) && !dog.voted
-    })
+    const hasDownvotedDogsSelected = dogs.some((dog) => {
+        return selectedDogs.includes(dog.id) && !dog.voted;
+    });
 
     const selectedAll = selectedDogs.length === dogs.length;
     const selectedSome = selectedDogs.length > 0;
@@ -130,7 +130,10 @@ const Dashboard: React.FC = () => {
                                                 VOTE_ENUM.UPVOTE
                                             )
                                         }
-                                        disabled={!selectedSome || !hasDownvotedDogsSelected}
+                                        disabled={
+                                            !selectedSome ||
+                                            !hasDownvotedDogsSelected
+                                        }
                                         className="w-[100%] md:w-[50%]"
                                     >
                                         Upvote
@@ -142,7 +145,10 @@ const Dashboard: React.FC = () => {
                                                 VOTE_ENUM.DOWNVOTE
                                             )
                                         }
-                                        disabled={!selectedSome || !hasUpvotedDogsSelected}
+                                        disabled={
+                                            !selectedSome ||
+                                            !hasUpvotedDogsSelected
+                                        }
                                         className="w-[100%] md:w-[50%]"
                                     >
                                         Downvote
@@ -153,10 +159,10 @@ const Dashboard: React.FC = () => {
                     </div>
 
                     <div className="overflow-y-auto no-scrollbar">
-                        {isLoading || isFetching ? (
-                            <LoadingSpinner />
-                        ) : error ? (
+                        {error ? (
                             <ErrorMessage />
+                        ) : isLoading || isFetching ? (
+                            <Loading />
                         ) : (
                             <DogGrid
                                 dogs={dogs}
@@ -167,12 +173,13 @@ const Dashboard: React.FC = () => {
                         )}
                     </div>
                 </div>
-                <Pagination
-                    currentPage={currentPage}
-                    pageCount={pageCount}
-                    onPageChange={onPageChange}
-                    disabled={isLoading || Boolean(error)}
-                />
+                {!isLoading && !isFetching && !error && (
+                    <Pagination
+                        currentPage={currentPage}
+                        pageCount={pageCount}
+                        onPageChange={onPageChange}
+                    />
+                )}
             </div>
         </div>
     );
