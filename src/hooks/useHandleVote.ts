@@ -14,6 +14,29 @@ interface HandleVoteDataProps {
     value?: VOTE_ENUM;
 }
 
+/**
+ * Custom hook for handling vote submissions on dog images.
+ * Allows voting on multiple images with success, error, and finish callbacks.
+ *
+ * @param {Function} [props.onSuccess] - Callback triggered on successful vote submission.
+ * @param {Function} [props.onError] - Callback triggered on vote submission error.
+ * @param {Function} [props.onFinish] - Callback triggered when the vote operation is settled.
+ * @returns {Function} handleVote - Function to initiate a vote.
+ * @returns {boolean} isLoading - Whether the vote operation is in progress.
+ * @returns {boolean} isError - Whether an error occurred during the vote operation.
+ * @returns {Error|undefined} error - The error encountered during the vote operation.
+ *
+ * @example
+ * const { handleVote, isLoading, isError, error } = useHandleVote({
+ *   onSuccess: () => console.log('Vote submitted successfully'),
+ *   onError: () => console.log('Vote submission failed'),
+ *   onFinish: () => console.log('Vote operation finished'),
+ * });
+ *
+ * handleVote({ imageIds: ['img1', 'img2'], value: VOTE_ENUM.UPVOTE });
+ * if (isLoading) return <p>Submitting votes...</p>;
+ * if (isError) console.error(error);
+ */
 const useHandleVote = ({ onSuccess, onError, onFinish }: HandleVoteProps) => {
     const mutation = useMutation<void, Error, HandleVoteDataProps>({
         mutationFn: async ({

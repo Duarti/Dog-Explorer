@@ -68,6 +68,12 @@ const Message: React.FC<MessageProps> = ({ content, type, duration = 2 }) => {
     );
 };
 
+/**
+ * Utility for displaying messages of various types.
+ * Provides methods to show success, error, info, and warning messages.
+ * @example
+ * message.success('Operation successful', 3);
+ */
 const message = {
     success: (content: string, duration?: number) =>
         showMessage(content, 'success', duration),

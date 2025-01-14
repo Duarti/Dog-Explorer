@@ -11,7 +11,23 @@ interface UseDogsProps {
 }
 
 /**
- * This hook will return sorted / filtered data queried from local storage, or from The Dog API if local storage is empty.
+ * Custom hook to retrieve and manage a list of dogs from context (local storage) or API.
+ *
+ * @param {string} [props.searchQuery] - Search query for filtering the dog list.
+ * @param {string} [props.sortOption] - Sorting option for ordering the dog list.
+ * @returns {Dog[]} dogs - The filtered and sorted list of dogs.
+ * @returns {Error|null} error - Any error encountered during the fetch.
+ * @returns {boolean} isLoading - Whether the data is currently loading.
+ * @returns {boolean} isFetching - Whether a fetch request is in progress.
+ *
+ * @example
+ * const { dogs, error, isLoading, isFetching } = useGetDogs({
+ *   searchQuery: 'retriever',
+ *   sortOption: 'name',
+ * });
+ * if (isLoading || isFetching) return <p>Loading...</p>;
+ * if (error) return <p>Error loading dogs.</p>;
+ * return <ul>{dogs.map(dog => <li key={dog.id}>{dog.name}</li>)}</ul>;
  */
 const useGetDogs = ({ searchQuery, sortOption }: UseDogsProps) => {
     const { contextDogs, setContextDogs } = useContext(DogsContext);

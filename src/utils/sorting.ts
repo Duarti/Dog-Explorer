@@ -15,7 +15,7 @@ export const sortDogs = (dogs: Dog[], sortOption: SORT_OPTION_ENUM): Dog[] => {
             return sortedDogs.sort((a, b) => a.name.localeCompare(b.name));
         case SORT_OPTION_ENUM.NAME_DESC:
             return sortedDogs.sort((a, b) => b.name.localeCompare(a.name));
-        case SORT_OPTION_ENUM.LIFESPAN_ASC:
+        case SORT_OPTION_ENUM.LIFESPAN_ASC: //Sorting by lifespan given on a range will sort based on the average lifespan
             return sortedDogs.sort(
                 (a, b) =>
                     getAverageLifespan(a.lifeSpan) -

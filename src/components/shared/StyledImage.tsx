@@ -4,6 +4,10 @@ interface StyledImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
     placeholder?: React.ReactNode;
 }
 
+/**
+ * A styled image component with a loading placeholder and fade-in effect.
+ * @param {JSX.Element} [props.placeholder] - Placeholder element to show while the image is loading.
+ */
 const StyledImage: React.FC<StyledImageProps> = ({
     placeholder = (
         <div className="w-full h-full bg-gray-200 animate-pulse rounded-lg" />

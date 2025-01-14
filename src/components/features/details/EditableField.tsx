@@ -9,6 +9,10 @@ interface EditableFieldProps {
     placeholder?: string;
 }
 
+/**
+ * Editable text field component.
+ * Displays an input field that can toggle between editable and read-only states.
+ */
 const EditableField: React.FC<EditableFieldProps> = ({
     name,
     value,

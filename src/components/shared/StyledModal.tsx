@@ -12,6 +12,14 @@ interface StyledModalProps {
     className?: string;
 }
 
+/**
+ * A customizable modal component with title, content, and confirm/cancel buttons.
+ *
+ * @param {Function} props.onClose - Callback triggered when the modal is closed.
+ * @param {Function} props.onConfirm - Callback triggered when the confirm button is clicked.
+ * @param {string} [props.confirmButtonText='Confirm'] - Text for the confirm button.
+ * @param {string} [props.title] - Title displayed at the top of the modal.
+ */
 const StyledModal: React.FC<StyledModalProps> = ({
     isOpen,
     onClose,

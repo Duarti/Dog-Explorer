@@ -5,7 +5,19 @@ import getLocalDogs from '@utils/getLocalDogs';
 import { Dog } from '@/types/types';
 
 /**
- * This hook will return data for a specific dog queried from local storage, or from The Dog API if local storage is empty.
+ * Custom hook to retrieve a dog's data from context (local storage), or fetch from the API if needed.
+ *
+ * @param {number|undefined} id - The ID of the dog to retrieve.
+ * @returns {Dog|undefined} dog - The retrieved dog's data.
+ * @returns {Error|null} error - Any error encountered during the fetch.
+ * @returns {boolean} isLoading - Whether the data is currently loading.
+ * @returns {boolean} isFetching - Whether a fetch request is in progress.
+ *
+ * @example
+ * const { dog, error, isLoading, isFetching } = useGetDog(1);
+ * if (isLoading || isFetching) return <p>Loading...</p>;
+ * if (error) return <p>Error loading dog data.</p>;
+ * return <p>{dog?.name}</p>;
  */
 const useGetDog = (id: number | undefined) => {
     const { contextDogs, setContextDogs } = useContext(DogsContext);
