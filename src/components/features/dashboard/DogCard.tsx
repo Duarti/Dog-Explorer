@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
-import TrashIcon from '/assets/trash_icon.svg';
-import StarIcon from '/assets/star_icon.svg';
-import { Dog } from '../../types/types';
-import StyledButton from '../StyledButton';
-import StyledModal from '../StyledModal';
-import { DogsContext } from '../../context/DogsContext';
 import { useNavigate } from 'react-router-dom';
-import StyledImage from '../StyledImage';
+import TrashIcon from '/assets/images/trash_icon.svg';
+import StarIcon from '/assets/images/star_icon.svg';
+import { Dog } from '@/types/types';
+import { DogsContext } from '@/context/DogsContext';
+import StyledModal from '@components/shared/StyledModal';
+import StyledImage from '@components/shared/StyledImage';
+import StyledButton from '@components/shared/StyledButton';
 
 interface DogCardProps {
     dog: Dog;

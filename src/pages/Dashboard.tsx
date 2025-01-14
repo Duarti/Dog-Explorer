@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorMessage from '../components/ErrorMessage';
-import DogGrid from '../components/dashboard/DogGrid';
-import Pagination from '../components/dashboard/Pagination';
-import SearchBar from '../components/dashboard/SearchBar';
-import SortSelect from '../components/dashboard/SortSelect';
-import { SORT_OPTION_ENUM, VOTE_ENUM } from '../types/types';
-import useGetDogs from '../hooks/useGetDogs';
-import StyledCheckbox from '../components/StyledCheckbox';
-import StyledButton from '../components/StyledButton';
-import { theme } from '../styles/theme';
-import { ITEMS_PER_PAGE } from '../utils/constants';
-import useHandleVoteLocally from '../hooks/useHandleVoteLocally';
-import message from '../components/Message';
+import { SORT_OPTION_ENUM, VOTE_ENUM } from '@/types/types';
+import { theme } from '@/styles/theme';
+import { ITEMS_PER_PAGE } from '@utils/constants';
+import useHandleVoteLocally from '@hooks/useHandleVoteLocally';
+import useGetDogs from '@hooks/useGetDogs';
+import LoadingSpinner from '@components/shared/LoadingSpinner';
+import ErrorMessage from '@components/util/ErrorMessage';
+import DogGrid from '@components/features/dashboard/DogGrid';
+import Pagination from '@components/features/dashboard/Pagination';
+import SearchBar from '@components/features/dashboard/SearchBar';
+import SortSelect from '@components/features/dashboard/SortSelect';
+import StyledCheckbox from '@components/shared/StyledCheckbox';
+import StyledButton from '@components/shared/StyledButton';
+import message from '@components/shared/Message';
 
 const Dashboard: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { voteForDog } from '../api/api';
-import message from '../components/Message';
-import { VOTE_ENUM } from '../types/types';
+import { voteForDog } from '@api/api';
+import message from '@components/shared/Message';
+import { VOTE_ENUM } from '@/types/types';
 
 interface HandleVoteProps {
     onSuccess?: () => void;

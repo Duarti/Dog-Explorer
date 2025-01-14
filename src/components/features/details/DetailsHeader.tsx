@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import StyledButton from './StyledButton';
-import BackArrowIcon from '/assets/back_arrow_icon.svg';
+import BackArrowIcon from '/assets/images/back_arrow_icon.svg';
+import StyledButton from '@components/shared/StyledButton';
 
-const DashboardHeader = () => {
+const DetailsHeader = () => {
     const navigate = useNavigate();
 
     const onBackClick = () => {
@@ -31,4 +31,4 @@ const DashboardHeader = () => {
     );
 };
 
-export default DashboardHeader;
+export default DetailsHeader;

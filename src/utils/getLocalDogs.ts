@@ -1,4 +1,4 @@
-import { Dog } from '../types/types';
+import { Dog } from '@/types/types';
 
 const getLocalDogs = (): Dog[] => {
     const localDogs = localStorage.getItem('dogs');

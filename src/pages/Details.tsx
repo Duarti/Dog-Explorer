@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import EditableField from '../components/EditableField';
-import StyledButton from '../components/StyledButton';
-import useGetDog from '../hooks/useGetDog';
-import { Dog, FormField } from '../types/types';
-import { DogsContext } from '../context/DogsContext';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorMessage from '../components/ErrorMessage';
-import Loading from '../components/Loading';
-import StyledImage from '../components/StyledImage';
-import message from '../components/Message';
-import { validateAllFields, validateField } from '../utils/validate';
-import DashboardHeader from '../components/DashboardHeader';
+import { Dog, FormField } from '@/types/types';
+import { validateAllFields, validateField } from '@utils/validate';
+import { DogsContext } from '@/context/DogsContext';
+import useGetDog from '@hooks/useGetDog';
+import EditableField from '@components/features/details/EditableField';
+import StyledButton from '@components/shared/StyledButton';
+import LoadingSpinner from '@components/shared/LoadingSpinner';
+import ErrorMessage from '@components/util/ErrorMessage';
+import Loading from '@components/shared/Loading';
+import StyledImage from '@components/shared/StyledImage';
+import message from '@components/shared/Message';
+import DashboardHeader from '@components/features/details/DetailsHeader';
 
 const buttonStyle = 'px-4 py-2 min-w-[10rem] flex-1 lg:flex-[0]';
 

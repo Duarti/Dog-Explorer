@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
-import { DogsContext } from '../context/DogsContext';
-import { useFetchDogs } from './useFetchDogs';
-import { sortAndFilterDogs } from '../utils/sortAndFilterDogs';
-import { SORT_OPTION_ENUM } from '../types/types';
-import getLocalDogs from '../utils/getLocalDogs';
+import { SORT_OPTION_ENUM } from '@/types/types';
+import { DogsContext } from '@/context/DogsContext';
+import { useFetchDogs } from '@/hooks/useFetchDogs';
+import { sortAndFilterDogs } from '@utils/sortAndFilterDogs';
+import getLocalDogs from '@utils/getLocalDogs';
 
 interface UseDogsProps {
     searchQuery: string;
@@ -15,11 +15,10 @@ interface UseDogsProps {
  */
 const useGetDogs = ({ searchQuery, sortOption }: UseDogsProps) => {
     const { contextDogs, setContextDogs } = useContext(DogsContext);
-    
+
     const localDogs = getLocalDogs();
     const hasLocalDogs = Boolean(localDogs.length);
-    const firstQueryDone = localStorage.getItem("first-query")
-    
+    const firstQueryDone = localStorage.getItem('first-query');
 
     // Don't fetch if we have dogs in local storage
     const {
@@ -31,10 +30,10 @@ const useGetDogs = ({ searchQuery, sortOption }: UseDogsProps) => {
 
     // If we have dogs in local storage, set the context dogs to the local dogs (this will write into local storage as well)
     useEffect(() => {
-        if(!fetchedDogs) return
+        if (!fetchedDogs) return;
         if (!hasLocalDogs || !firstQueryDone) setContextDogs(fetchedDogs);
-        if(!firstQueryDone) {
-            localStorage.setItem("first-query", "true")
+        if (!firstQueryDone) {
+            localStorage.setItem('first-query', 'true');
         }
     }, [fetchedDogs]);
 

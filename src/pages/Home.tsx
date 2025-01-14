@@ -1,24 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import StyledButton from '../components/StyledButton';
-import StyledImage from '../components/StyledImage';
+import StyledButton from '@components/shared/StyledButton';
+import StyledImage from '@components/shared/StyledImage';
 
 const homeDogInfo = [
     {
         name: 'Labrador Retriever',
-        imageUrl: '/assets/labrador.jpg',
+        imageUrl: '/assets/images/labrador.jpg',
         description:
             'Friendly, outgoing, and high-spirited companions. Perfect for families and active owners.',
     },
     {
         name: 'German Shepherd',
-        imageUrl: '/assets/german_shepherd.jpg',
+        imageUrl: '/assets/images/german_shepherd.jpg',
         description:
             'Intelligent and versatile, known for their loyalty and protective nature.',
     },
     {
         name: 'Golden Retriever',
-        imageUrl: '/assets/golden_retriever.jpg',
+        imageUrl: '/assets/images/golden_retriever.jpg',
         description:
             'Kind and trustworthy dogs, famous for their friendly temperament and intelligence.',
     },
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         <div
             className="flex flex-col text-center p-6 min-h-[100%]"
             style={{
-                backgroundImage: 'url(/assets/dog_wallpaper.jpg)',
+                backgroundImage: 'url(/assets/images/dog_wallpaper.jpg)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
             }}

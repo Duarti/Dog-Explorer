@@ -1,6 +1,6 @@
 import { useContext, useCallback } from 'react';
-import { DogsContext } from '../context/DogsContext';
-import { VOTE_ENUM } from '../types/types';
+import { DogsContext } from '@/context/DogsContext';
+import { VOTE_ENUM } from '@/types/types';
 
 const useHandleVoteLocally = (): ((
     dogIds: number[],

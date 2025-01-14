@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StyledButton from './StyledButton';
+import StyledButton from '@components/shared/StyledButton';
 
 interface StyledModalProps {
     isOpen: boolean;

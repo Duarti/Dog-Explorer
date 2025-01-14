@@ -1,4 +1,4 @@
-import StyledInput from '../StyledInput';
+import StyledInput from '@components/shared/StyledInput';
 
 interface SearchBarProps {
     value: string;

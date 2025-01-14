@@ -1,15 +1,15 @@
-import './App.css';
 import { lazy, Suspense } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from './components/GlobalError';
 import { Route, Routes } from 'react-router-dom';
-import LoadingSpinner from './components/LoadingSpinner';
-import Layout from './pages/Layout';
-import { DogsProvider } from './context/DogsContext';
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const Home = lazy(() => import('./pages/Home'));
-const Details = lazy(() => import('./pages/Details'));
+import { ErrorBoundary } from 'react-error-boundary';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Layout from '@/pages/Layout';
+import { DogsProvider } from '@/context/DogsContext';
+import ErrorFallback from '@components/util/GlobalError';
+import LoadingSpinner from '@components/shared/LoadingSpinner';
+import NotFound from '@components/util/NotFound';
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const Home = lazy(() => import('@/pages/Home'));
+const Details = lazy(() => import('@/pages/Details'));
 
 const queryClient = new QueryClient();
 
@@ -30,6 +30,7 @@ function App() {
                                     path="details/:id"
                                     element={<Details />}
                                 />
+                                <Route path="*" element={<NotFound />} />
                             </Route>
                         </Routes>
                     </Suspense>

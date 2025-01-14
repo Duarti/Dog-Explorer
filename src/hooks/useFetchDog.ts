@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchDog } from '../api/api';
-import { Dog } from '../types/types';
+import { fetchDog } from '@api/api';
+import { Dog } from '@/types/types';
 
 export const useFetchDog = (id: number | undefined, enabled: boolean) => {
     return useQuery<Dog>({

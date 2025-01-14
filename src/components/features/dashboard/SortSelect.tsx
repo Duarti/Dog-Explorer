@@ -1,6 +1,6 @@
 import React from 'react';
-import { SORT_OPTION_ENUM } from '../../types/types';
-import StyledSelect from '../StyledSelect';
+import { SORT_OPTION_ENUM } from '@/types/types';
+import StyledSelect from '@components/shared/StyledSelect';
 
 interface SortSelectProps {
     value: SORT_OPTION_ENUM;
@@ -29,8 +29,17 @@ const sortOptions: { value: SORT_OPTION_ENUM; label: string }[] = [
     },
 ];
 
-const SortSelect: React.FC<SortSelectProps> = ({ value, onChange, className = '' }) => (
-    <StyledSelect value={value} onChange={(e) => onChange(Number(e.target.value) as SORT_OPTION_ENUM)} options={sortOptions} className={className} />
+const SortSelect: React.FC<SortSelectProps> = ({
+    value,
+    onChange,
+    className = '',
+}) => (
+    <StyledSelect
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value) as SORT_OPTION_ENUM)}
+        options={sortOptions}
+        className={className}
+    />
 );
 
 export default SortSelect;

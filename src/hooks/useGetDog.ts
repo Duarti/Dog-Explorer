@@ -1,8 +1,8 @@
-import { useContext, useEffect } from "react";
-import { DogsContext } from "../context/DogsContext";
-import { useFetchDog } from "./useFetchDog";
-import getLocalDogs from "../utils/getLocalDogs";
-import { Dog } from "../types/types";
+import { useContext, useEffect } from 'react';
+import { DogsContext } from '@/context/DogsContext';
+import { useFetchDog } from '@hooks/useFetchDog';
+import getLocalDogs from '@utils/getLocalDogs';
+import { Dog } from '@/types/types';
 
 /**
  * This hook will return data for a specific dog queried from local storage, or from The Dog API if local storage is empty.
@@ -27,7 +27,10 @@ const useGetDog = (id: number | undefined) => {
 
     // If we have the dog in local storage, set the context dog to the local dog (this will write into local storage as well)
     useEffect(() => {
-        if (fetchedDog && !contextDogs.some((dog) => dog.id === fetchedDog.id)) {
+        if (
+            fetchedDog &&
+            !contextDogs.some((dog) => dog.id === fetchedDog.id)
+        ) {
             setContextDogs([...contextDogs, fetchedDog]);
         }
     }, [fetchedDog]);

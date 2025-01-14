@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Dog, DogData, VOTE_ENUM } from '../types/types';
+import { Dog, DogData, VOTE_ENUM } from '@/types/types';
 
 const API_BASE_URL = 'https://api.thedogapi.com/v1';
 const API_KEY = import.meta.env.VITE_THE_DOG_API_KEY;
@@ -25,7 +25,6 @@ export const fetchDogs = async () => {
 
 export const fetchDog = async (id: number) => {
     try {
-        // Fetch the basic dog data
         const response = await axios.get(`${API_BASE_URL}/breeds/${id}`, {
             headers,
         });

@@ -1,4 +1,4 @@
-import { FormField } from '../types/types';
+import { FormField } from '@/types/types';
 
 export const validateField = (
     fields: FormField[],

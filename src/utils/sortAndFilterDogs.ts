@@ -1,5 +1,5 @@
-import { Dog, SORT_OPTION_ENUM } from '../types/types';
-import { sortDogs } from './sorting';
+import { Dog, SORT_OPTION_ENUM } from '@/types/types';
+import { sortDogs } from '@utils/sorting';
 
 export const sortAndFilterDogs = (
     dogs: Dog[] | undefined,

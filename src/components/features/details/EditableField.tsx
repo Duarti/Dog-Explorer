@@ -1,5 +1,5 @@
-import React from "react";
-import StyledInput from "./StyledInput";
+import React from 'react';
+import StyledInput from '@components/shared/StyledInput';
 
 interface EditableFieldProps {
     name: string;
@@ -25,8 +25,8 @@ const EditableField: React.FC<EditableFieldProps> = ({
             placeholder={placeholder}
             className={`md:mx-4 flex-[2] border rounded w-full ${
                 isEditing
-                    ? ""
-                    : "border-transparent bg-transparent font-medium focus:border-transparent"
+                    ? ''
+                    : 'border-transparent bg-transparent font-medium focus:border-transparent'
             }`}
             readOnly={!isEditing}
         />

@@ -1,5 +1,5 @@
-import { theme } from '../../styles/theme';
-import StyledButton from '../StyledButton';
+import { theme } from '@/styles/theme';
+import StyledButton from '@components/shared/StyledButton';
 
 interface PaginationProps {
     currentPage: number;

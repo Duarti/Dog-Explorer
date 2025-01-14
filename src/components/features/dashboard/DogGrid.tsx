@@ -1,6 +1,6 @@
-import { Dog } from '../../types/types';
-import { ITEMS_PER_PAGE } from '../../utils/constants';
-import DogCard from './DogCard';
+import { Dog } from '@/types/types';
+import { ITEMS_PER_PAGE } from '@utils/constants';
+import DogCard from '@components/features/dashboard/DogCard';
 
 interface DogGridProps {
     dogs: Dog[];

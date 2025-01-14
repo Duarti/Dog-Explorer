@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { Dog } from '../types/types';
-import getLocalDogs from '../utils/getLocalDogs';
+import { Dog } from '@/types/types';
+import getLocalDogs from '@utils/getLocalDogs';
 
 interface DogsContextProps {
     contextDogs: Dog[];
@@ -17,7 +17,7 @@ export const DogsContext = createContext<DogsContextProps>({
  */
 export const DogsProvider = ({ children }: { children: ReactNode }) => {
     const [contextDogs, setContextDogs] = useState<Dog[]>([]);
-    
+
     const localDogs = getLocalDogs();
     const hasLocalDogs = Boolean(localDogs.length);
 

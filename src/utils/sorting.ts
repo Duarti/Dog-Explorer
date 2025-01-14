@@ -1,4 +1,4 @@
-import { Dog, SORT_OPTION_ENUM } from '../types/types';
+import { Dog, SORT_OPTION_ENUM } from '@/types/types';
 
 const getAverageLifespan = (lifespan: string): number => {
     const matches = lifespan.split(' ');
